@@ -2,16 +2,16 @@
 
 // TodoListItem.jsx
 
-
-const TodoListItem = (props) => {
+export default function TodoListItem (props) {
     return (
         <li>
-            <div>Title: {props.todo.title}</div>
-            <div>Time: {props.todo.Time}</div>
-        </li>
+       {props.todo.title}
+        
+    </li>
     );
 }
-export default TodoListItem;
+
+
 
 
 
