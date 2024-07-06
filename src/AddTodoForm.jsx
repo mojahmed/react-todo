@@ -19,6 +19,6 @@ function AddTodoForm(props) {
       <button type="submit">Add</button>
     </form>
   );
-};
+}
 
 export default AddTodoForm;
