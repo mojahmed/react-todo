@@ -1,7 +1,5 @@
 
 
-// TodoListItem.jsx
-
 export default function TodoListItem (todo) {
     return (
         <li>
