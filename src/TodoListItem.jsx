@@ -1,6 +1,6 @@
 
 
-export default function TodoListItem (todo) {
+export default function TodoListItem ({ todo }) {
     return (
         <li>
        {todo.title}
