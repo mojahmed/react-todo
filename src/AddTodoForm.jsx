@@ -1,11 +1,14 @@
+import  { useState, useRef } from 'react';
+import InputWithLabel from './InputWithLabel';
 
-import { useState } from 'react';
 
 function AddTodoForm({ onAddTodo }) {
   const [todoTitle, setTodoTitle] = useState("");
+  const inputRef = useRef(null); // Create the ref using useRef
+
   function handleTitleChange(event) {
     const newTodoTitle = event.target.value;
-    setTodoTitle(newTodoTitle); // to Update the todoTitle state
+    setTodoTitle(newTodoTitle); // Update the todoTitle state
   }
 
   function handleAddTodo(event) {
@@ -14,24 +17,24 @@ function AddTodoForm({ onAddTodo }) {
       title: todoTitle,
       id: Date.now(), // Generate a unique identifier
     });
-    setTodoTitle(""); // Clear the input by resetting the state 
+    setTodoTitle(""); // Clear the input by resetting the state
+    inputRef.current.focus(); // Focus the input field after adding a todo
   }
 
-
   return (
-    <form onSubmit={handleAddTodo}>
-      <label htmlFor="todoTitle">Title</label>
-      <input
-        name="title"
-        type="text"
+    <form onSubmit={handleAddTodo} >
+      <InputWithLabel
         id="todoTitle"
-        value={todoTitle} // i Controlled the input by those 2 line 
-        onChange={handleTitleChange} // Handle input change
-      />
+        inputType="text"
+        value={todoTitle} 
+        onChange={handleTitleChange} 
+        ref={inputRef} 
+      >
+        Title
+      </InputWithLabel>
       <button type="submit">Add</button>
     </form>
   );
 }
 
 export default AddTodoForm;
-

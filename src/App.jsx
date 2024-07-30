@@ -26,12 +26,19 @@ function App() {
     setTodoList([...todoList, newTodo]);
   };
 
+  //  this is the function work to remove todo list
+  const removeTodo = (id) => {
+    const newTodoList = todoList.filter((todo) => todo.id !==id);
+    setTodoList(newTodoList);
+  };
+  
+
   return (
     <>
       <h1>Todo List</h1>
       <div className="center-container">
         <AddTodoForm onAddTodo={addTodo} /> {/* Use AddTodoForm component */}
-        <TodoList todoList={todoList} /> {/* Pass todoList as a prop */}
+        <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> {/* Pass todoList as a prop */}
       </div>
     </>
   );
