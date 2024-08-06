@@ -8,10 +8,10 @@ import TodoListItem from './TodoListItem';
 //     { id: 3, title: "Eat my meal"}
 // ];
 
-const TodoList = ({todoList}) => (
+const TodoList = ({todoList,  onRemoveTodo}) => (
     <ul>
          {todoList.map((todo) => (
-            <TodoListItem key={todo.id} todo={todo} />
+            <TodoListItem key={todo.id} todo={todo}  onRemoveTodo={onRemoveTodo} />
         ))}
     </ul>
 );
