@@ -5,69 +5,124 @@ import AddTodoForm from './AddTodoForm';
 
 function App() {
   const initialTodoList = [];
-  // State to hold the todo list
   const [todoList, setTodoList] = useState(initialTodoList);
-  // State to track if data is loading
   const [isLoading, setIsLoading] = useState(true);
 
-  //  fetch todo list data from localStorage 
-  useEffect(() => {
-    const simulateLoading = new Promise((resolve) => {
-      setTimeout(() => {
-        const savedTodoList = JSON.parse(localStorage.getItem('savedTodoList')) || [];
-        const object = {
-          data:{
-            todoList: savedTodoList,
-          },
+  async function fetchData() {
+    const options = {
+      method: "GET",
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}` },
+    };
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
+
+    try {
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+
+      const data = await response.json();
+      const todos = data.records.map((todo) => ({
+        id: todo.id,
+        title: todo.fields.title
+      }));
+
+      setTodoList(todos);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function addTodoToAirtable(newTodo) {
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fields: {
+          title: newTodo.title
         }
-        resolve(object); 
-      }, 2000); 
-    });
-
-    // to Handle the promise
-    simulateLoading
-      .then((result) => {
-        // console.log('Promise resolved with:', result);
-        const retrievedTodoList = result.data.todoList;
-        setTodoList(retrievedTodoList); 
-        setIsLoading(false); // Set loading to false after updating the todo list
       })
-      .catch((error) => {
-        console.error('Promise rejected:', error);
-        setIsLoading(false); // Ensure loading is set to false even if there's an error
-      });
+    };
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
 
-  }, []); 
+    try {
+      const response = await fetch(url, options);
+      
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      return {
+        id: data.id,
+        title: data.fields.title
+      };
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
+  }
 
-  
+  async function deleteTodoFromAirtable(id) {
+    const options = {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
+      }
+    };
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}/${id}`;
+
+    try {
+      const response = await fetch(url, options);
+      
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function addTodo(newTodo) {
+    const addedTodo = await addTodoToAirtable(newTodo);
+    if (addedTodo) {
+      setTodoList([...todoList, addedTodo]);
+    }
+  }
+
+  const removeTodo = async (id) => {
+    await deleteTodoFromAirtable(id); // Delete from Airtable first
+    const newTodoList = todoList.filter((todo) => todo.id !== id);
+    setTodoList(newTodoList); // Then update state
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   useEffect(() => {
     if (!isLoading) {
       localStorage.setItem('savedTodoList', JSON.stringify(todoList));
     }
-  }, [todoList, isLoading]); 
-
-  // Function to add a new todo
-  const addTodo = (newTodo) => {
-    setTodoList([...todoList, newTodo]);
-  };
-
-  // Function to remove a todo
-  const removeTodo = (id) => {
-    const newTodoList = todoList.filter((todo) => todo.id !== id);
-    setTodoList(newTodoList);
-  };
+  }, [todoList, isLoading]);
 
   return (
     <>
       <h1>Todo List</h1>
       <div className="center-container">
-        <AddTodoForm onAddTodo={addTodo} /> {/* Use AddTodoForm component */}
+        <AddTodoForm onAddTodo={addTodo} />
         
-        {/* Conditional rendering based on isLoading state */}
         {isLoading ? (
           <p>Loading...</p> 
         ) : (
-          <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> // Show TodoList if isLoading is false
+          <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
         )}
         
       </div>
