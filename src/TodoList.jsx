@@ -1,5 +1,5 @@
 
-
+import styles from './TodoList.module.css';
 import TodoListItem from './TodoListItem';
 
 // const todoList = [
@@ -9,11 +9,13 @@ import TodoListItem from './TodoListItem';
 // ];
 
 const TodoList = ({todoList,  onRemoveTodo}) => (
+    <div className={styles.todoList}>
     <ul>
          {todoList.map((todo) => (
             <TodoListItem key={todo.id} todo={todo}  onRemoveTodo={onRemoveTodo} />
         ))}
     </ul>
+    </div>
 );
 
 export default TodoList;
