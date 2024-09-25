@@ -1,7 +1,11 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+
 import TodoList from './components/TodoList'; 
 import AddTodoForm from './components/AddTodoForm'; 
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 
 function App() {
   const initialTodoList = [];
@@ -114,6 +118,10 @@ function App() {
   }, [todoList, isLoading]);
 
   return (
+    <BrowserRouter>
+    <Routes>
+      <Route path='/'
+      element={
     <>
       <h1>Todo List</h1>
       <div className="center-container">
@@ -126,7 +134,13 @@ function App() {
         )}
         
       </div>
+     
     </>
+    }>
+    </Route>
+    <Route path='/new' element={<h1>New To Do List</h1>}/>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
