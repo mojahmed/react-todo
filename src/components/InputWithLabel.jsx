@@ -1,4 +1,5 @@
-import  { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 export default function InputWithLabel({
   id,
@@ -10,7 +11,8 @@ export default function InputWithLabel({
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []); 
+
   return (
     <>
       <label htmlFor={id}>{children}</label>
@@ -23,3 +25,10 @@ export default function InputWithLabel({
     </>
   );
 }
+
+InputWithLabel.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};

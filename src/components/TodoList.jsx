@@ -1,6 +1,7 @@
 
 import styles from './TodoList.module.css';
 import TodoListItem from './TodoListItem';
+import PropTypes from 'prop-types';
 
 // const todoList = [
 //     { id: 1, title: "Complete assignment"},
@@ -17,5 +18,10 @@ const TodoList = ({todoList,  onRemoveTodo}) => (
     </ul>
     </div>
 );
+TodoList.prototypes ={
+    onRemoveTodo: PropTypes.func.isRequired,
+};
+
+
 
 export default TodoList;

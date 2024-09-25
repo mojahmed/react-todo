@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import TodoList from './TodoList'; 
-import AddTodoForm from './AddTodoForm'; 
+import TodoList from './components/TodoList'; 
+import AddTodoForm from './components/AddTodoForm'; 
 
 function App() {
   const initialTodoList = [];

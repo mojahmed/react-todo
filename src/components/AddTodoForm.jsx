@@ -1,24 +1,25 @@
 import { useState, useRef } from 'react';
 import InputWithLabel from './InputWithLabel';
-import styles from './AddTodoForm.module.css'; // Import CSS Module
+import styles from './AddTodoForm.module.css'; 
+import PropTypes from 'prop-types';
 
 function AddTodoForm({ onAddTodo }) {
   const [todoTitle, setTodoTitle] = useState("");
-  const inputRef = useRef(null); // Create the ref using useRef
+  const inputRef = useRef(null); 
 
   function handleTitleChange(event) {
     const newTodoTitle = event.target.value;
-    setTodoTitle(newTodoTitle); // Update the todoTitle state
+    setTodoTitle(newTodoTitle); 
   }
 
   function handleAddTodo(event) {
     event.preventDefault();
     onAddTodo({
       title: todoTitle,
-      id: Date.now(), // Generate a unique identifier
+      id: Date.now(), 
     });
-    setTodoTitle(""); // Clear the input by resetting the state
-    inputRef.current.focus(); // Focus the input field after adding a todo
+    setTodoTitle(""); 
+    inputRef.current.focus();
   }
 
   return (
@@ -38,5 +39,9 @@ function AddTodoForm({ onAddTodo }) {
     </div>
   );
 }
+
+AddTodoForm.propTypes = {
+  onAddTodo: PropTypes.func.isRequired,
+};
 
 export default AddTodoForm;
