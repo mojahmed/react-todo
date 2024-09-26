@@ -9,10 +9,10 @@ export default function TodoListItem({ todo, onRemoveTodo }) {
       </li>
     );
   }
-  TodoListItem.prototypes ={
+  TodoListItem.propTypes = {
+    todo: PropTypes.object.isRequired, 
     onRemoveTodo: PropTypes.func.isRequired,
-  }
-
+  };
 
 
 

@@ -7,6 +7,7 @@ export default function InputWithLabel({
   onChange,
   children,
 }) {
+  console.log("InputWithLabel P:", { id, value, onChange, children });
   const inputRef = useRef();
 
   useEffect(() => {

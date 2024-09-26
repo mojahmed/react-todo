@@ -14,6 +14,7 @@ function AddTodoForm({ onAddTodo }) {
 
   function handleAddTodo(event) {
     event.preventDefault();
+    console.log("Adding Todo:", todoTitle);
     onAddTodo({
       title: todoTitle,
       id: Date.now(), 
