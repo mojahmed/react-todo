@@ -18,10 +18,15 @@ const TodoList = ({todoList,  onRemoveTodo}) => (
     </ul>
     </div>
 );
-TodoListItem.propTypes = {
-    todo: PropTypes.object.isRequired, 
+TodoList.propTypes = {
+    todoList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+        })
+    ).isRequired,
     onRemoveTodo: PropTypes.func.isRequired,
-  };
+};
 
 
 export default TodoList;
