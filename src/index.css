@@ -28,7 +28,7 @@ body {
   place-items: center;
   min-width: 32px;
   min-height: 100vh;
-  background-color: #e2b9b9;
+  background-color: #917777;
 }
 
 h1 {
@@ -36,29 +36,36 @@ h1 {
   line-height: 1.1;
 }
 
+.button-container {
+  display: flex;               
+  justify-content: center;      /* Center horizontally */
+  align-items: center;          
+  margin: 20px 0; 
+  margin-left: 30px;
 
+}
+.button {
+  margin: 0 10px;             
+}
 
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  
 }
-button:hover {
-  border-color: #393d88;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.button.sort {
+  background-color: #008CBA; 
 }
 
-
+.button.sort:hover {
+  background-color: #799faa; 
+}
 
 @media (prefers-color-scheme: light) {
   :root {
