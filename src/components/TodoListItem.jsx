@@ -6,7 +6,7 @@ export default function TodoListItem({ todo, onRemoveTodo }) {
         <li className={styles.ListItem}>
             <div>
                 <h3>{todo.title}</h3>
-                <p>{new Date(todo.createdTime).toLocaleDateString()}</p>
+                <p>{new Date(todo.createdTime).toLocaleString()}</p>
             </div>
             <button type="button" onClick={() => onRemoveTodo(todo.id)}>Remove</button>
         </li>

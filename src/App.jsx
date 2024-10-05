@@ -34,12 +34,13 @@ function App() {
       const todos = data.records.map((todo) => ({
         id: todo.id,
         title: todo.fields.title,
-        createdTime: todo.fields.createdTime,
+        createdTime: todo.createdTime,
       }))
-      
+      // todos.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+
       // console.log(todos);
 
-      setTodoList(todos);
+      setTodoList(sortTodos(todos));
     } catch (error) {
       console.log("Error fetching data:", error.message);
     } finally {
@@ -71,7 +72,7 @@ function App() {
       return {
         id: data.id,
         title: data.fields.title,
-        createdTime: data.fields.createdTime,
+        createdTime: data.createdTime,
       };
     } catch (error) {
       console.log(error.message);
@@ -164,7 +165,7 @@ function App() {
               {isLoading ? (
                 <p>Loading...</p> 
               ) : (
-                <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> // Pass removeTodo function here
+                <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> 
               )}
             </div>
           </>
