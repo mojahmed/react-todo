@@ -1,4 +1,5 @@
-import './App.css';
+// import './App.css';
+import './combinedStyles.css';
 import { useState, useEffect } from 'react';
 import TodoList from './components/TodoList'; 
 import AddTodoForm from './components/AddTodoForm'; 
@@ -149,23 +150,16 @@ function App() {
           <>
             <h1>Todo List</h1>
             <div className="center-container">
-              <AddTodoForm onAddTodo={addTodo} />
-              <div className="button-container">
-    <button className="button sort" onClick={toggleSortOrder}>
-        Sort {sortOrder === 'asc' ? 'Descending' : 'Ascending'}
-    </button>
-    <button className="button sort" onClick={() => changeSortField('title')}>
-        Sort by Title
-    </button>
-    <button className="button button sort created-time" onClick={() => changeSortField('createdTime')}>
-        Sort by Created Time
-    </button>
-</div>
-
+              <AddTodoForm 
+                onAddTodo={addTodo} 
+                onToggleSortOrder={toggleSortOrder}
+                onChangeSortField={changeSortField} 
+                sortOrder={sortOrder}
+              />
               {isLoading ? (
                 <p>Loading...</p> 
               ) : (
-                <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> 
+                <TodoList todoList={sortTodos(todoList)} onRemoveTodo={removeTodo} /> 
               )}
             </div>
           </>

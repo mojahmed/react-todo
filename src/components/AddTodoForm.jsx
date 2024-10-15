@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react';
-import InputWithLabel from './InputWithLabel';
-import styles from './AddTodoForm.module.css'; 
-import PropTypes from 'prop-types';
-function AddTodoForm({ onAddTodo }) {
-  const [todoTitle, setTodoTitle] = useState("");
-  // const inputRef = useRef(null); 
 
+import { useState, useEffect } from 'react';
+import InputWithLabel from './InputWithLabel'; 
+import PropTypes from 'prop-types';
+
+function AddTodoForm({ onAddTodo, onToggleSortOrder, onChangeSortField, sortOrder }) {
+  const [todoTitle, setTodoTitle] = useState("");
   const inputId = "todoTitle";
 
   function handleTitleChange(event) {
     setTodoTitle(event.target.value);
-    
   }
 
   function handleAddTodo(event) {
@@ -21,7 +19,6 @@ function AddTodoForm({ onAddTodo }) {
       id: Date.now(), 
     });
     setTodoTitle(""); 
-   
   }
 
   useEffect(() => {
@@ -32,25 +29,38 @@ function AddTodoForm({ onAddTodo }) {
   }, [todoTitle]); 
 
   return (
-    <div className={styles.addTodoForm}>
+    <div className="addTodoForm">
       <form onSubmit={handleAddTodo}>
         <InputWithLabel
           id={inputId}
-          // inputType="text"
           value={todoTitle} 
-          onChange={handleTitleChange} 
-         
+          onChange={handleTitleChange}
         >
           Title
         </InputWithLabel>
         <button type="submit">Add</button>
       </form>
+      <div className="button-container">
+        <button className="button sort" onClick={onToggleSortOrder}>
+          Sort {sortOrder === 'asc' ? 'Descending' : 'Ascending'}
+        </button>
+        <button className="button sort" onClick={() => onChangeSortField('title')}>
+          Sort by Title
+        </button>
+        <button className="button sort" onClick={() => onChangeSortField('createdTime')}>
+          Sort by Created Time
+        </button>
+      </div>
     </div>
   );
 }
 
 AddTodoForm.propTypes = {
   onAddTodo: PropTypes.func.isRequired,
+  onToggleSortOrder: PropTypes.func.isRequired,
+  onChangeSortField: PropTypes.func.isRequired,
+  sortOrder: PropTypes.string.isRequired,
 };
 
 export default AddTodoForm;
+
